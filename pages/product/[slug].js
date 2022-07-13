@@ -1,17 +1,31 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React from 'react'
+import React, { useContext } from 'react'
 import Layout from '../../components/Layout';
 import data from '../../utils/data';
 import Image from 'next/image';
+import { Store } from '../../utils/Store';
 
 function ProductScreen() {
+    const { state, dispatch } = useContext(Store);
+
     const {query} = useRouter();
     const {slug} = query;
     const product = data.products.find((x) => x.slug === slug);
     if(!product){
         return <div>Product Item not found</div>
     }
+
+    const addToCartHandler = () => {
+      const existingItem = state.cart.cartItems.find((x) => x.slug === product.slug);
+      const quantity = existingItem ? existingItem.quantity + 1 : 1;
+      if (product.countInStock < quantity) {
+        alert('sorry. Product is out of stock');
+        return;
+      }
+      dispatch({ type: 'CART_ADD_ITEM', payload: {...product, quantity} });
+    }
+
   return (
     <Layout title={product.name}>
         <Link href="/">Home</Link><a>{'>'} {product.name}</a>
@@ -46,7 +60,7 @@ function ProductScreen() {
                 <div>Status</div>
                 <div>{product.countInStock > 0 ? 'In Stock' : 'Unavailable'}</div>
               </div>
-              <button className='primary-button w-full'>Add to cart</button>
+              <button className='primary-button w-full' onClick={addToCartHandler}>Add to cart</button>
             </div>
           </div>
         </div>
