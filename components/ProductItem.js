@@ -1,8 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 
-import Link from 'next/link'
-import React from 'react'
-
+import Link from 'next/link';
+import React from 'react';
 
 export default function ProductItem({product}) {
   return (
@@ -25,7 +24,7 @@ export default function ProductItem({product}) {
             </Link>
             <p className='mb-2'>{product.brand}</p>
             <p>₹{product.price}</p>
-            <button className='primary-button' type='button'>
+            <button className='primary-button' type='button' >
                 Add to cart
             </button>
         </div>

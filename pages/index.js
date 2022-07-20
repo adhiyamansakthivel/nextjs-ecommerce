@@ -4,6 +4,7 @@ import  data from '../utils/data';
 import ProductItem from '../components/ProductItem';
 
 export default function Home() {
+  
   return (
     <>
       <Layout title="Home Page">
